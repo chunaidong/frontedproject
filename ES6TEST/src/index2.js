@@ -1,5 +1,3 @@
-"use strict";
-
 /*
 function testFun(...args) {
     for(let val of args){
@@ -18,11 +16,11 @@ console.log(moban);*/
 let moban = `的覅哦阿王春f的发生发射点发打算`
 console.log(moban.includes(words));*/
 //TODO 快速复制操作
-var words = "王春|";
+let words = "王春|";
 // let moban = `的覅哦阿王春f的发生发射点发打算`
 console.log(words.repeat(6));
 console.log(Number.isFinite(words));
 console.log(Number.isFinite(12));
 console.log(Number.isFinite(12.33));
 console.log(Number.isFinite("12.333"));
-console.log(Number.isFinite(12.33, 33));
+console.log(Number.isFinite(12.33,33));
