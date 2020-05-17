@@ -1,0 +1,34 @@
+
+/* 总体布局 */
+.container{
+    display: flex;/* 弹性布局 */
+    flex-direction: column;/* 垂直分布 */
+    align-items: center;/* 居中分布*/
+}
+page{
+    background: #b3d4db;
+    height: 100%;
+}
+/* 头像样式 */
+.avatar{
+    width: 200rpx;
+    height: 200rpx;
+    margin-top: 160rpx;
+}
+
+.user-name{
+    font-size: 32rpx;
+    margin-top: 100rpx;
+}
+.moto-container{
+    border: 1rpx solid #405f80;
+    height: 80rpx;
+    width: 200rpx;
+    text-align: center;
+    margin-top: 200rpx;
+    border-radius: 5px;
+}
+.moto{
+    font-size: 22rpx;
+    line-height: 80rpx;
+}

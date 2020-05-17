@@ -1,0 +1,10 @@
+<!--view 类似于div-->
+<view class="container">
+    <image class="avatar" src="/images/avatar.png"></image>
+    <text class="user-name">hello world</text>
+    <!--bind:tap 为此组件绑定相应事件 会出现事件冒泡现象-->
+    <!--catch:tap 为此组件绑定相应事件 不会出现事件冒泡现象-->
+    <view class="moto-container" bind:tap="onTap">
+      <text class="moto">开启小程序之旅</text>
+    </view>
+</view>

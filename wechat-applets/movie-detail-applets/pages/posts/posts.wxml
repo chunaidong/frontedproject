@@ -1,0 +1,26 @@
+<import src="post-item-template/post-item-template.wxml"/>
+<view>
+    <swiper autoplay="true" indicator-dots="true" interval="5000">
+        <swiper-item>
+            <image src="/images/wx.png" />
+        </swiper-item>
+        <swiper-item>
+            <image src="/images/vr.png" />
+        </swiper-item>
+        <swiper-item>
+             <image src="/images/iqiyi.png" />
+        </swiper-item>
+    </swiper>
+    <!--数组循环两种方式 1.在组件外层加一个block，将循环放在block内部，2.直接在最外层view组件上添加循环标志-->
+    <block wx:key="title" wx:for="{{postsContent}}" wx:for-index="index" wx:for-item="item" >
+        <!--template模板用法 微信小程序事件传值 https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxml/event.html-->
+        <view catch:tap="onPostTap" data-post-id="{{item.postId}}">
+            <template is="postTemplate" data="{{item}}" />
+        </view>
+    </block>
+
+
+
+
+    
+</view>
