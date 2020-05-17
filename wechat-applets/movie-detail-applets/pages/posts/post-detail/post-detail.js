@@ -42,6 +42,11 @@ Page({
         });
         //更新文章是否缓存的值
         wx.setStorageSync("post_collection",postsCollected);
+        //提示信息
+        wx.showToast({
+            title: postCollected? '收藏成功': '取消收藏成功',
+            mask: true
+        })
     },
     /**
      * 分享功能
