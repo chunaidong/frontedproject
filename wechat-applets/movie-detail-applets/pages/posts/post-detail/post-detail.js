@@ -1,5 +1,5 @@
 import localData from "../../../data/local-data";
-
+var app = getApp();
 Page({
     data: {
         collectPostId: "",
@@ -31,9 +31,16 @@ Page({
             wx.setStorageSync("post_collection", postsCollected);
         }
         //注册音乐播放器
-        this.registerInnerAudioContext();
+        // this.registerInnerAudioContext();
+        if(app.globalProperties.isPalyingMusic && app.globalProperties.playingMusicCurrentId === currentPostId){
+            this.setData({
+                isPalyingMusic: true
+            })
+        }
         //注册背景音乐播放器
-        // this.registerBackgroundAudioManager();
+        this.registerBackgroundAudioManager();
+
+
     },
     /**
      * 收藏功能
@@ -104,16 +111,21 @@ Page({
      */
     onMusicTap(event){
         let isPlaying = this.data.isPalyingMusic;
+        let currentId = this.data.collectPostId;
+        let musicDetail = localData[currentId].music;
         //新版小程序的音乐播放
         if(isPlaying){
-            this.data.innerAudioContext.pause();
-            // this.data.backgroundAudioManager.pause();
+            // this.data.innerAudioContext.pause();
+            this.data.backgroundAudioManager.pause();
             this.setData({
                 isPalyingMusic: false
             })
         }else{
-            this.data.innerAudioContext.play();
-            // this.data.backgroundAudioManager.play();
+            // this.data.innerAudioContext.play();
+            this.data.backgroundAudioManager.play();
+            this.data.backgroundAudioManager.src = musicDetail.url;
+            this.data.backgroundAudioManager.title = musicDetail.title;
+            this.data.backgroundAudioManager.coverImgUrl = musicDetail.coverImg;
             this.setData({
                 isPalyingMusic: true
             })
@@ -135,11 +147,29 @@ Page({
      */
     registerBackgroundAudioManager(){
         let currentId = this.data.collectPostId;
-        let musicDetail = localData[currentId].music;
+        // let musicDetail = localData[currentId].music;
+        let _that = this;
         const backgroundAudioManager  = wx.getBackgroundAudioManager();
-        backgroundAudioManager.src = musicDetail.url;
-        backgroundAudioManager.title = musicDetail.title;
-        backgroundAudioManager.coverImgUrl = musicDetail.coverImg;
+        // 设置了 src 之后会自动播放
+        // backgroundAudioManager.src = musicDetail.url;
+        // backgroundAudioManager.title = musicDetail.title;
+        // backgroundAudioManager.coverImgUrl = musicDetail.coverImg;
+        //监听启动事件
+        backgroundAudioManager.onPlay(() =>{
+            _that.setData({
+                isPalyingMusic: true
+            });
+            app.globalProperties.isPalyingMusic = true;
+            app.globalProperties.playingMusicCurrentId = currentId;
+        })
+        //监听暂停事件
+        backgroundAudioManager.onPause(() => {
+            _that.setData({
+                isPalyingMusic: false
+            });
+            app.globalProperties.isPalyingMusic = false;
+            app.globalProperties.playingMusicCurrentId = null;
+        })
         this.setData({
             backgroundAudioManager: backgroundAudioManager
         })
