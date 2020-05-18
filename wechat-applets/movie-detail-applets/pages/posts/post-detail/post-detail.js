@@ -2,7 +2,12 @@ import localData from "../../../data/local-data";
 
 Page({
     data: {
-        collectPostId: ""
+        collectPostId: "",
+        isPalyingMusic: false,
+        //音频播放器
+        innerAudioContext: {},
+        //背景音频播放器
+        backgroundAudioManager:{}
     },
     onLoad: function (options) {
         let currentPostId = options.postId
@@ -11,7 +16,7 @@ Page({
         let postDetail = localData[currentPostId];
         this.setData({
             postDetail: postDetail
-        })
+        });
         //缓存收藏设置
         let postsCollected = wx.getStorageSync("post_collection");
         if (postsCollected) {
@@ -19,12 +24,16 @@ Page({
             let postCollected = postsCollected[currentPostId];
             this.setData({
                 collected: postCollected
-            })
+            });
         } else {
             postsCollected = [];
             postsCollected[currentPostId] = false;
             wx.setStorageSync("post_collection", postsCollected);
         }
+        //注册音乐播放器
+        this.registerInnerAudioContext();
+        //注册背景音乐播放器
+        // this.registerBackgroundAudioManager();
     },
     /**
      * 收藏功能
@@ -78,6 +87,61 @@ Page({
      * 分享功能
      */
     onShareTap(event) {
-        wx.removeStorageSync("key");
+        let itemList = Array.of("分享到微信","分享到微博","分享到朋友圈","分享到QQ");
+        wx.showActionSheet({
+            itemList: itemList,
+            itemColor: '#405f80',
+            success(res) {
+                wx.showToast({
+                    title: itemList[res.tapIndex]
+                })
+            }
+        })
+    },
+    /**
+     * 音乐播放功能
+     * @param event
+     */
+    onMusicTap(event){
+        let isPlaying = this.data.isPalyingMusic;
+        //新版小程序的音乐播放
+        if(isPlaying){
+            this.data.innerAudioContext.pause();
+            // this.data.backgroundAudioManager.pause();
+            this.setData({
+                isPalyingMusic: false
+            })
+        }else{
+            this.data.innerAudioContext.play();
+            // this.data.backgroundAudioManager.play();
+            this.setData({
+                isPalyingMusic: true
+            })
+        }
+    },
+    /**
+     * 注册音频播放器
+     */
+    registerInnerAudioContext(){
+        let currentId = this.data.collectPostId;
+        const innerAudioContext = wx.createInnerAudioContext();
+        innerAudioContext.src = localData[currentId].music.url;
+        this.setData({
+            innerAudioContext: innerAudioContext
+        })
+    },
+    /**
+     * 注册背景音频播放器
+     */
+    registerBackgroundAudioManager(){
+        let currentId = this.data.collectPostId;
+        let musicDetail = localData[currentId].music;
+        const backgroundAudioManager  = wx.getBackgroundAudioManager();
+        backgroundAudioManager.src = musicDetail.url;
+        backgroundAudioManager.title = musicDetail.title;
+        backgroundAudioManager.coverImgUrl = musicDetail.coverImg;
+        this.setData({
+            backgroundAudioManager: backgroundAudioManager
+        })
     }
 });
