@@ -13,7 +13,7 @@ class User {
     }
 }
 function welcome(user:User){
-    return "I am from fullName " + user.fullName;
+    return "I am from fullName ddd " + user.fullName;
 }
 
 // let user  = {

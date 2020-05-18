@@ -7,7 +7,7 @@ var User = /** @class */ (function () {
     return User;
 }());
 function welcome(user) {
-    return "I am from fullName " + user.fullName;
+    return "I am from fullName ddd " + user.fullName;
 }
 // let user  = {
 //     firstName: 'wang',
