@@ -9,7 +9,19 @@ Page({
 
     },
     onPostTap(event){
-        let postId = event.currentTarget.dataset.postId;
+        this.navigateToDetail(event.currentTarget.dataset.postId);
+    },
+    /**
+     * 轮播图跳转到详情页
+     * @param event
+     */
+    onSwiperTap(event){
+        // target和currentTarget
+        // target指的是当前点击的组件 currentTarget指的是事件捕获的组件
+        // target这里指的是image currentTarget指的是swipper
+        this.navigateToDetail(event.target.dataset.postId);
+    },
+    navigateToDetail(postId){
         wx.navigateTo({
             url: "./post-detail/post-detail?postId="+postId
         })

@@ -1,14 +1,14 @@
 <import src="post-item-template/post-item-template.wxml"/>
 <view>
-    <swiper autoplay="true" indicator-dots="true" interval="5000">
+    <swiper catch:tap="onSwiperTap" autoplay="true" indicator-dots="true" interval="5000">
         <swiper-item>
-            <image src="/images/wx.png" />
+            <image src="/images/wx.png" data-post-id="3" />
         </swiper-item>
         <swiper-item>
-            <image src="/images/vr.png" />
+            <image src="/images/vr.png" data-post-id="4"/>
         </swiper-item>
         <swiper-item>
-             <image src="/images/iqiyi.png" />
+             <image src="/images/iqiyi.png" data-post-id="5"/>
         </swiper-item>
     </swiper>
     <!--数组循环两种方式 1.在组件外层加一个block，将循环放在block内部，2.直接在最外层view组件上添加循环标志-->
