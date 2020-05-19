@@ -1,0 +1,19 @@
+<import src="../movie/movie-template.wxml" />
+<template name="movieListTemplate">
+    <view class="movie-list-container">
+        <view class="inner-container">
+            <view class="movie-head">
+                <text class="slogan">多大</text>
+                <view class="more">
+                    <text class="more-text">多大</text>
+                    <image class="more-img" src="/images/icon/arrow-right.png" />
+                </view>
+            </view>
+            <view class="movies-container">
+                <template is="movieTemplate"/>
+                <template is="movieTemplate"/>
+                <template is="movieTemplate"/>
+            </view>
+        </view>
+    </view>
+</template>
