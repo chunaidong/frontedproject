@@ -3,16 +3,22 @@
     <view class="movie-list-container">
         <view class="inner-container">
             <view class="movie-head">
-                <text class="slogan">多大</text>
+                <text class="slogan">正在热映</text>
                 <view class="more">
-                    <text class="more-text">多大</text>
+                    <text class="more-text">更多</text>
                     <image class="more-img" src="/images/icon/arrow-right.png" />
                 </view>
             </view>
             <view class="movies-container">
-                <template is="movieTemplate"/>
-                <template is="movieTemplate"/>
-                <template is="movieTemplate"/>
+                <block wx:for="{{inTheaters}}" wx:for-item="movie">
+                    <template is="movieTemplate"  data="{{...movie}}"/>
+                </block>
+                <block wx:for="{{comingSoon}}" wx:for-item="movie">
+                    <template is="movieTemplate" data="{{...movie}}"/>
+                </block>
+                <block wx:for="{{top250}}" wx:for-item="movie">
+                    <template is="movieTemplate" data="{{...movie}}"/>
+                </block>
             </view>
         </view>
     </view>
