@@ -38,6 +38,21 @@ Page({
         utils.http(nextUrl,this.processMovieData);
         wx.showNavigationBarLoading();
     },
+    /**
+     * 下拉刷新数据
+     * @param event
+     */
+    onPullDownRefresh(event){
+        let nextUrl = `${this.data.requestUrl}?start=0&count=20`;
+        //清空数据
+        this.setData({
+            movies:{},
+            isEmpty:true
+        })
+        utils.http(nextUrl,this.processMovieData);
+        wx.showNavigationBarLoading();
+
+    },
     processMovieData(doubanMovieData){
         let movies = [];
         for(let subject of doubanMovieData.subjects){
@@ -65,6 +80,7 @@ Page({
             totalCount: this.data.totalCount + 20
         });
         wx.hideNavigationBarLoading();
+        wx.stopPullDownRefresh();
     },
     onReady(event){
         wx.setNavigationBarTitle({
