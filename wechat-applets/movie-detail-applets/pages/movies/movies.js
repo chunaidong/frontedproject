@@ -4,12 +4,15 @@ Page({
     data:{
         inTheaters:{},
         comingSoon:{},
-        top250:{}
+        top250:{},
+        searchResult: {},
+        containerShow: true,
+        searchPanelShow: false,
     },
     onLoad(options){
-        let inTheatersUrl = `${app.globalProperties.dobanBase}/v2/movie/in_theaters`;
-        let comingSoonUrl = `${app.globalProperties.dobanBase}/v2/movie/coming_soon`;
-        let top250Url = `${app.globalProperties.dobanBase}/v2/movie/top250`;
+        let inTheatersUrl = `${app.globalProperties.dobanBase}/v2/movie/in_theaters?start=6&count=3`;
+        let comingSoonUrl = `${app.globalProperties.dobanBase}/v2/movie/coming_soon?start=6&count=3`;
+        let top250Url = `${app.globalProperties.dobanBase}/v2/movie/top250?start=6&count=3`;
         this.getMovieListData(inTheatersUrl,'inTheaters',"正在热映");
         this.getMovieListData(comingSoonUrl,'comingSoon',"即将上映");
         this.getMovieListData(top250Url,'top250',"豆瓣Top250");
@@ -27,7 +30,7 @@ Page({
     getMovieListData(url,movieType,categoryTitle){
         let _that = this;
         wx.request({
-            url: `${url}?start=6&count=3`,
+            url: url,
             method:'GET',
             header:{
                 "Content-type":"application/json"
@@ -61,6 +64,27 @@ Page({
         this.setData({
             [movieType]: {movies:movies,categoryTitle:categoryTitle},
         });
-    }
+    },
+    onCancelImgTap: function (event) {
+        this.setData({
+                containerShow: true,
+                searchPanelShow: false,
+                searchResult:{}
+            }
+        )
+    },
+
+    onBindFocus: function (event) {
+        this.setData({
+            containerShow: false,
+            searchPanelShow: true
+        })
+    },
+
+    onBindBlur: function (event) {
+        var text = event.detail.value;
+        var searchUrl = app.globalProperties.dobanBase + "/v2/movie/search?q=" + text;
+        this.getMovieListData(searchUrl, "searchResult", "");
+    },
 
 })
