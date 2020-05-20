@@ -38,3 +38,4 @@ let testA: TestA = {
     lastName: "ssss"
 }
 testA.firstName = 'sssss'*/
+//# sourceMappingURL=lesson2.js.map
