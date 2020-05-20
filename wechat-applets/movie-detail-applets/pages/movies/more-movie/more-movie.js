@@ -30,6 +30,11 @@ Page({
             requestUrl:url
         })
     },
+    onReachBottom:function(event){
+        let nextUrl = `${this.data.requestUrl}?start=${this.data.totalCount}&count=20`;
+        utils.http(nextUrl,this.processMovieData);
+        wx.showNavigationBarLoading();
+    },
     /**
      * 滑动到底部触发的事件
      */
