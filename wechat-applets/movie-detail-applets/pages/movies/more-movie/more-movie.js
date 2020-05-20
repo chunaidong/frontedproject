@@ -45,10 +45,12 @@ Page({
     onPullDownRefresh(event){
         let nextUrl = `${this.data.requestUrl}?start=0&count=20`;
         //清空数据
-        this.setData({
+        /*this.setData({
             movies:{},
             isEmpty:true
-        })
+        })*/
+        this.data.movies = {};
+        this.data.isEmpty = true;
         utils.http(nextUrl,this.processMovieData);
         wx.showNavigationBarLoading();
 

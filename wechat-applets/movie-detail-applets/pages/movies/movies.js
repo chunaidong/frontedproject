@@ -87,4 +87,11 @@ Page({
         this.getMovieListData(searchUrl, "searchResult", "");
     },
 
+    onMovieTap:function(event){
+        var movieId = event.currentTarget.dataset.movieid;
+        wx.navigateTo({
+            url: "movie-detail/movie-detail?id="+movieId
+        })
+    },
+
 })

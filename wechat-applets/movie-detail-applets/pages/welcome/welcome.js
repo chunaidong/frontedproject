@@ -5,7 +5,7 @@ Page({
             url: "../posts/posts"
         });*/
         //小程序页面跳转，可以回退，触发的是onHide事件
-        wx.navigateTo({
+        wx.switchTab({
             url: "../posts/posts"
         })
     },
