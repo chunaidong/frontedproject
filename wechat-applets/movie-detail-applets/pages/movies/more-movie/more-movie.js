@@ -28,7 +28,7 @@ Page({
         utils.http(url,this.processMovieData);
         this.setData({
             requestUrl:url
-        })
+        });
     },
     onReachBottom:function(event){
         let nextUrl = `${this.data.requestUrl}?start=${this.data.totalCount}&count=20`;
